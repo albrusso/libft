@@ -6,7 +6,7 @@
 /*   By: albrusso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:03:58 by albrusso          #+#    #+#             */
-/*   Updated: 2024/03/03 14:17:23 by albrusso         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:32:11 by albrusso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ char	**ft_split(const char *s, char c)
 	char	**arr;
 	size_t	n;
 
-	n = numstr(s, c);
-	arr = ft_malloc((n + 1), sizeof(char *));
-	ft_splitta(s, c, arr, n);
+	n = ft_nbr_split(s, c);
+	arr = ft_calloc((n + 1), sizeof(char *));
+	ft_add_str(s, c, arr, n);
 	return (arr);
 }
