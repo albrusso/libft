@@ -6,34 +6,49 @@
 /*   By: albrusso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:20:33 by albrusso          #+#    #+#             */
-/*   Updated: 2022/11/11 15:40:42 by albrusso         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:44:56 by albrusso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int	ft_convert(const char *s)
 {
 	int	i;
-	int	sign;
-	int	result;
+	int	j;
 
-	result = 0;
 	i = 0;
-	sign = 0;
-	while (str[i] == '\t' || str[i] == '\f' || str[i] == '\n'
-		|| str[i] == '\r' || str[i] == '\v' || str[i] == ' ')
-		i++;
-	if (str[i] == '-')
-		sign = -1;
-	else
-		sign = 1;
-	if (sign == -1 || str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
+	j = 0;
+	while (s[i] != '\0')
 	{
-		result = (result * 10) + (str[i] - '0');
+		if (s[i] >= '0' && s[i] <= '9')
+			j = j * 10 + (s[i] - '0');
+		else
+			return (j);
 		i++;
 	}
-	return (result * sign);
+	return (j);
+}
+
+int	ft_atoi(const char *s)
+{
+	int	i;
+	int	res;
+	int	sign;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while (s[i] == ' ' ||
+			(s[i] >= '\t' && s[i] <= '\r'))
+		i++;
+	if (s[i] == '-')
+	{
+		sign = -sign;
+		i++;
+	}
+	else if (s[i] == '+')
+		i++;
+	res = ft_convert(&s[i]);
+	return (res * sign);
 }

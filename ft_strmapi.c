@@ -6,7 +6,7 @@
 /*   By: albrusso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:02:59 by albrusso          #+#    #+#             */
-/*   Updated: 2022/11/11 15:48:12 by albrusso         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:24:48 by albrusso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			*str;
+	char			*tmp;
 	unsigned int	i;
 
 	i = 0;
-	str = ft_strdup(s);
-	if (!str)
+	tmp = (char *)ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!tmp)
 		return (NULL);
-	while (str[i])
+	while (s[i])
 	{
-		str[i] = (*f)(i, str[i]);
+		tmp[i] = (*f)(i, s[i]);
 		i++;
 	}
-	return (str);
+	return (tmp);
 }

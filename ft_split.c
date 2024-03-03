@@ -6,7 +6,7 @@
 /*   By: albrusso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:03:58 by albrusso          #+#    #+#             */
-/*   Updated: 2022/11/11 15:48:01 by albrusso         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:17:23 by albrusso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	ft_counter(char const *s, char c)
+size_t	ft_nbr_split(const char *s, char c)
 {
-	int		i;
+	size_t	i;
+	size_t	n;
+	size_t	len;
 
 	i = 0;
-	if (*s && *s != c)
-		i++;
-	while (*s && *(s + 1))
+	n = 0;
+	len = 0;
+	while (1)
 	{
-		if (*s == c && *(s + 1) != c)
-			i++;
-		s++;
+		if (s[i] == c || s[i] == '\0')
+		{
+			if (len != 0)
+				n++;
+			len = 0;
+		}
+		else
+			len++;
+		if (s[i] == '\0')
+			break ;
+		i++;
 	}
-	return (i + 1);
+	return (n);
 }
 
-int	leng(char const *s, char c)
+void	ft_add_str(const char *s, char c, char **arr, size_t n)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*tmp;
 
 	i = 0;
-	while (*s && *s != c)
+	j = 0;
+	len = 0;
+	while (j < n)
 	{
+		if (s[i] == c || s[i] == '\0')
+		{
+			if (len != 0)
+			{
+				tmp = ft_substr(s, (unsigned int)(i - len), len);
+				arr[j] = tmp;
+				j++;
+			}
+			len = 0;
+		}
+		else
+			len++;
 		i++;
-		s++;
 	}
-	return (i + 1);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(const char *s, char c)
 {
 	char	**arr;
-	int		total;
-	int		len;
-	int		i;
+	size_t	n;
 
-	i = 0;
-	total = ft_counter(s, c);
-	arr = ft_calloc(total * sizeof(char *), 1);
-	if (!arr)
-		return (NULL);
-	while (*s && i < total - 1 && total != 1)
-	{
-		while (*s == c)
-			s++;
-		len = leng(s, c);
-		arr[i] = malloc(len);
-		if (!arr[i])
-			return (NULL);
-		ft_strlcpy(arr[i], s, len);
-		i++;
-		s += len - 1;
-	}
+	n = numstr(s, c);
+	arr = ft_malloc((n + 1), sizeof(char *));
+	ft_splitta(s, c, arr, n);
 	return (arr);
 }

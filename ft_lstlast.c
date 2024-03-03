@@ -6,7 +6,7 @@
 /*   By: albrusso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:05:20 by albrusso          #+#    #+#             */
-/*   Updated: 2022/11/11 16:19:30 by albrusso         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:54:37 by albrusso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	while (lst)
+	t_list	*tmp;
+
+	if (lst)
 	{
-		if (!(lst->next))
-			return (lst);
-		lst = lst->next;
+		tmp = lst;
+		while (1)
+		{
+			if (!tmp->next)
+				return (tmp);
+			tmp = tmp->next;
+		}
 	}
-	return (lst);
+	return (NULL);
 }

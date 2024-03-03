@@ -6,7 +6,7 @@
 /*   By: albrusso <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:02:38 by albrusso          #+#    #+#             */
-/*   Updated: 2022/11/11 15:48:16 by albrusso         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:25:46 by albrusso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strrchr(const char *str, int c)
 {
-	char	*ptr;
+	char	*s;
 	int		i;
 
 	i = ft_strlen(str);
@@ -22,8 +22,8 @@ char	*ft_strrchr(const char *str, int c)
 		i--;
 	if (str[i] == (char)c)
 	{
-		ptr = (char *)(str + i);
-		return (ptr);
+		s = (char *)(str + i);
+		return (s);
 	}
 	else
 		return (NULL);
