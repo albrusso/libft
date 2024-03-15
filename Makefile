@@ -6,7 +6,7 @@
 #    By: albrusso <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 14:16:03 by albrusso          #+#    #+#              #
-#    Updated: 2022/11/16 12:15:30 by albrusso         ###   ########.fr        #
+#    Updated: 2024/03/15 19:54:32 by albrusso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,17 @@
 
 NAME	=	libft.a
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -I.
-RM		=	rm -f
+CFLAGS	=	-Wall -Wextra -g
+OBJDIR	=	.obj
 
 ################################################################################
 #                                  COLORS                                      #
 ################################################################################
 
-GREEN	=	\033[38;5;76m
-RED		=	\033[38;5;160m
-YELLOW	=	\033[38;5;226m
-ORANGE	=	\033[38;5;202m
-PURPLE	=	\033[38;5;213m
-LBLUE	=	\033[38;5;51m
-BLUE	=	\033[38;5;117m
-INDI	=	\033[38;5;99m
-RESET	=	\033[00m
+GREEN	=	\033[0;32m
+YELLOW	=	\033[1;33m
+RED		=	\033[0;31m
+DEFAULT	=	\033[0m
 
 ################################################################################
 #                                   FILES                                      #
@@ -79,34 +74,33 @@ SRCS	=	ft_isalnum.c      \
 			ft_lstnew.c       \
 			ft_lstsize.c
 
+OBJS	=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+
 ################################################################################
 #                                   MAKE                                       #
 ################################################################################
 
-OBJS	=	$(SRCS:.c=.o)
-
-all:		header $(NAME)
-
-header:
-	@echo "$(ORANGE)Name:$(RESET)    libft"
-	@echo "$(ORANGE)Author:  $(RESET)albrusso$(RESET)"
-	@echo "$(ORANGE)Version: $(RESET)v 1.0$(RESET)"
-	@echo
+all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			@ ar rcs $(NAME) $(OBJS)
-			@echo "$(BLUE)libft $(GREEN)compiled!$(RESET)"
+	@echo "Building $(NAME) library..."
+	@ar rcs $@ $^
+	@echo "$(GREEN)Build successful!$(DEFAULT)"
+
+$(OBJDIR)/%.o:%.c | $(OBJDIR)
+	@echo "Compiling... $<"
+	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
 clean:
-			@ $(RM) $(OBJS)
-			@echo "$(BLUE)libft objects file $(YELLOW)removed!$(RESET)"
+	@echo "$(YELLOW)Cleaning object files...$(DEFAULT)"
+	@rm -rf $(OBJDIR)
 
-fclean:		clean
-			@ $(RM) $(NAME)
-			@echo "$(BLUE)libft.a $(YELLOW)removed!$(RESET)"
+fclean: clean
+	@echo "$(RED)Removing $(NAME) library...$(DEFAULT)"
+	@rm -f $(NAME)
 
-re:			fclean all
-
-PHONY:		all header clean fclean re
-
-.SILENT:
+re:	fclean all
+.PHONY: all clean fclean
